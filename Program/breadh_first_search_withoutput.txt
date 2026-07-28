@@ -1,0 +1,208 @@
+from collections import deque
+def breadth_first_search(graph,initial_state,goal_state):
+    initial_node={"state":initial_state,
+                  "path":[initial_state],
+                  "path_cost":0
+                  }
+    if initial_state==goal_state:
+        return initial_node["path"]
+    frontier=deque([initial_node])
+    explored=set()
+    while frontier:
+        node=frontier.popleft()
+        current_state=node["state"]
+        current_path=node["path"]
+        current_cost=node["path_cost"]
+        print(f"\n expanding node:(current_state)")
+        print(f"current path:(current_path)")
+        explored.add(current_state)
+        for child_state in graph.get(current_state,[]):
+            frontier_states={
+                frontier_node["state"]
+                for frontier_node in frontier
+                }
+            if(child_state not in explored and child_state not in frontier_states):
+                child_node={
+                 "state":child_state,
+                 "path":current_path+[child_state],
+                 "path_cost":current_cost+1
+                 }
+                print(f"generated child:(child_state)")
+                if child_state==goal_state:
+                    print(f"\n goal state(goal_state)found")
+                    return child_node["path"]
+                frontier.append(child_node)
+        print("frontier:",[frontier_node["state"] for frontier_node in frontier])
+        print("explored:",explored)
+    return None
+graph={
+    "A":["B","C"],
+    "B":["A","D","E"],
+    "C":["A","F","G"],
+    "D":["B"],
+    "E":["B","H"],
+    "F":["C"],
+    "G":["C","I"],
+    "H":["E"],
+    "I":["G"]
+    }
+initial_state="A"
+goal_state="I"
+solution=breadth_first_search(graph,initial_state,goal_state)
+if solution is not None:
+    print("\n solution path:")
+    print("->".join(solution))
+    print("path cost:",len(solution)-1)
+else:
+    print("\n failure:no path exsist")
+
+
+output:
+[Running] python -u "d:\AI_lab2026\breadth_first_search.py"
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+generated child:(child_state)
+frontier: ['B', 'C']
+explored: {'A'}
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+generated child:(child_state)
+frontier: ['C', 'D', 'E']
+explored: {'B', 'A'}
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+generated child:(child_state)
+frontier: ['D', 'E', 'F', 'G']
+explored: {'B', 'C', 'A'}
+
+ expanding node:(current_state)
+current path:(current_path)
+frontier: ['E', 'F', 'G']
+explored: {'B', 'D', 'C', 'A'}
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+frontier: ['F', 'G', 'H']
+explored: {'B', 'E', 'D', 'A', 'C'}
+
+ expanding node:(current_state)
+current path:(current_path)
+frontier: ['G', 'H']
+explored: {'B', 'E', 'F', 'D', 'A', 'C'}
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+
+ goal state(goal_state)found
+
+ solution path:
+A->C->G->I
+path cost: 3
+
+[Done] exited with code=0 in 0.099 seconds
+
+--------------------------------------------------------------
+from collections import deque
+def breadth_first_search(graph,initial_state,goal_state):
+    initial_node={"state":initial_state,
+                  "path":[initial_state],
+                  "path_cost":0
+                  }
+    if initial_state==goal_state:
+        return initial_node["path"]
+    frontier=deque([initial_node])
+    explored=set()
+    while frontier:
+        node=frontier.popleft()
+        current_state=node["state"]
+        current_path=node["path"]
+        current_cost=node["path_cost"]
+        print(f"\n expanding node:(current_state)")
+        print(f"current path:(current_path)")
+        explored.add(current_state)
+        for child_state in graph.get(current_state,[]):
+            frontier_states={
+                frontier_node["state"]
+                for frontier_node in frontier
+                }
+            if(child_state not in explored and child_state not in frontier_states):
+                child_node={
+                 "state":child_state,
+                 "path":current_path+[child_state],
+                 "path_cost":current_cost+1
+                 }
+                print(f"generated child:(child_state)")
+                if child_state==goal_state:
+                    print(f"\n goal state(goal_state)found")
+                    return child_node["path"]
+                frontier.append(child_node)
+        print("frontier:",[frontier_node["state"] for frontier_node in frontier])
+        print("explored:",explored)
+    return None
+graph={
+    "A":["B","C"],
+    "B":["A","D","E"],
+    "C":["A","E"],
+    "D":["B","E"],
+    "E":["D","E","C","H","G"],
+    "G":["E","H"],
+    "H":["E","G"]
+    }
+initial_state="A"
+goal_state="G"
+solution=breadth_first_search(graph,initial_state,goal_state)
+if solution is not None:
+    print("\n solution path:")
+    print("->".join(solution))
+    print("path cost:",len(solution)-1)
+else:
+    print("\n failure:no path exsist")
+
+OUTPUT:
+[Running] python -u "d:\AI_lab2026\breadth_first_search.py"
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+generated child:(child_state)
+frontier: ['B', 'C']
+explored: {'A'}
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+generated child:(child_state)
+frontier: ['C', 'D', 'E']
+explored: {'A', 'B'}
+
+ expanding node:(current_state)
+current path:(current_path)
+frontier: ['D', 'E']
+explored: {'A', 'B', 'C'}
+
+ expanding node:(current_state)
+current path:(current_path)
+frontier: ['E']
+explored: {'A', 'D', 'B', 'C'}
+
+ expanding node:(current_state)
+current path:(current_path)
+generated child:(child_state)
+generated child:(child_state)
+
+ goal state(goal_state)found
+
+ solution path:
+A->B->E->G
+path cost: 3
+
+[Done] exited with code=0 in 0.095 seconds
+
